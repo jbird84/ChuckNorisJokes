@@ -19,6 +19,9 @@
 		DA200C29294E4D13009E1494 /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA200C28294E4D13009E1494 /* ContainerViewController.swift */; };
 		DA537455294F7E4F009B1C61 /* ViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA537454294F7E4F009B1C61 /* ViewController+Ext.swift */; };
 		DA537457294F8C6B009B1C61 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA537456294F8C6B009B1C61 /* FavoritesViewController.swift */; };
+		DA53745A294FF63A009B1C61 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA537459294FF63A009B1C61 /* String+Ext.swift */; };
+		DA53745C2950AB17009B1C61 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53745B2950AB17009B1C61 /* UIImage+Ext.swift */; };
+		DA53745E2950B42B009B1C61 /* GifModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53745D2950B42B009B1C61 /* GifModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		DA200C28294E4D13009E1494 /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
 		DA537454294F7E4F009B1C61 /* ViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Ext.swift"; sourceTree = "<group>"; };
 		DA537456294F8C6B009B1C61 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		DA537459294FF63A009B1C61 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		DA53745B2950AB17009B1C61 /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
+		DA53745D2950B42B009B1C61 /* GifModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +88,7 @@
 				DA200C26294E24A3009E1494 /* MenuViewController.swift */,
 				DA200C28294E4D13009E1494 /* ContainerViewController.swift */,
 				DA537456294F8C6B009B1C61 /* FavoritesViewController.swift */,
+				DA53745D2950B42B009B1C61 /* GifModel.swift */,
 			);
 			path = ChuckNorisJokes;
 			sourceTree = "<group>";
@@ -90,6 +97,8 @@
 			isa = PBXGroup;
 			children = (
 				DA537454294F7E4F009B1C61 /* ViewController+Ext.swift */,
+				DA537459294FF63A009B1C61 /* String+Ext.swift */,
+				DA53745B2950AB17009B1C61 /* UIImage+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -180,7 +189,10 @@
 				DA200C25294E1E9C009E1494 /* APIManager.swift in Sources */,
 				DA200C0F294E1E75009E1494 /* AppDelegate.swift in Sources */,
 				DA537455294F7E4F009B1C61 /* ViewController+Ext.swift in Sources */,
+				DA53745E2950B42B009B1C61 /* GifModel.swift in Sources */,
+				DA53745A294FF63A009B1C61 /* String+Ext.swift in Sources */,
 				DA200C11294E1E75009E1494 /* SceneDelegate.swift in Sources */,
+				DA53745C2950AB17009B1C61 /* UIImage+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

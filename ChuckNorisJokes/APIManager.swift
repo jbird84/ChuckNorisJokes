@@ -7,17 +7,11 @@
 
 import Foundation
 
-
-//https://api.chucknorris.io/jokes/random
-
 class APIManager {
     
-    func fetchData(with: String, completion: @escaping (Result<JokeModel, Error>) -> Void) {
+    func fetchData(completion: @escaping (Swift.Result<JokeModel, Error>) -> Void) {
         guard let url = URL(string:"https://api.chucknorris.io/jokes/random") else { return }
-        var request = URLRequest(url: url)
-        
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "{\"key\":\"value\"}".data(using: .utf8)
+        let request = URLRequest(url: url)
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -41,6 +35,30 @@ class APIManager {
         task.resume()
     }
     
+    func fetchGifData(completion: @escaping (Swift.Result<GIF, Error>) -> Void) {
+        guard let url = URL(string: "https://tenor.googleapis.com/v2/search?q=chuck_norris&key=AIzaSyBcv3DJnhdLS3b34pYWPJ-1l4gSUP8lk_w&client_key=Chuck_Norris_Jokes&limit=1&random=true") else { return }
+        let request = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                completion(.failure(error))
+                print(error)
+                return
+            }
+            guard let data = data else {
+                completion(.failure(APIError.invalidData))
+                return
+            }
+                    do {
+                        let decoder = JSONDecoder()
+                        let model = try decoder.decode(GIF.self, from: data)
+                        completion(.success(model))
+                    } catch {
+                        completion(.failure(APIError.invalidData))
+                        print(error)
+                    }
+            }
+            task.resume()
+    }
 }
 
 enum APIError: Error {
