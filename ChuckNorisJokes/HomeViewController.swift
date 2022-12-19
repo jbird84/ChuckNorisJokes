@@ -13,9 +13,12 @@ protocol HomeViewControllerDelegate: AnyObject {
 
 class HomeViewController: UIViewController {
 
+    let heartImageView = UIImageView()
     let jokeLabel = UILabel()
     let getJokeButton = UIButton()
     let gifImageView = UIImageView()
+    
+    var isFavorite = false
     weak var delegate: HomeViewControllerDelegate?
     
     override func viewDidLoad() {
@@ -25,6 +28,7 @@ class HomeViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.dash"), style: .done, target: self, action: #selector(didTapMenuButton))
         setupJokeLabel()
         setupGetJokeButton()
+        //setupHeartImage()
     }
     
     private func setupJokeLabel() {
@@ -56,6 +60,24 @@ class HomeViewController: UIViewController {
         NSLayoutConstraint.activate([centerXConstraint, bottomConstraint])
     }
     
+    private func setupHeartImage() {
+        view.addSubview(heartImageView)
+        heartImageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        let config = UIImage.SymbolConfiguration(pointSize: 50)
+        let image = UIImage(systemName: "heart", withConfiguration: config)
+        heartImageView.image = image
+        heartImageView.contentMode = .scaleAspectFit
+        heartImageView.translatesAutoresizingMaskIntoConstraints = false
+        heartImageView.tintColor = .systemRed
+        heartImageView.isUserInteractionEnabled = true
+        let heartImageTapGesture = UITapGestureRecognizer(target: self, action: #selector(heartWasTapped(_:)))
+        heartImageView.addGestureRecognizer(heartImageTapGesture)
+        
+        let trailingConstraint = heartImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -150)
+        let bottomConstraint = heartImageView.bottomAnchor.constraint(equalTo: jokeLabel.topAnchor, constant: -30)
+        NSLayoutConstraint.activate([trailingConstraint, bottomConstraint])
+    }
+    
     private func setupGifView() {
         view.addSubview(gifImageView)
         gifImageView.frame = CGRect(x: 0, y: 0, width: view.bounds.width - 20, height: 300)
@@ -72,6 +94,13 @@ class HomeViewController: UIViewController {
         delegate?.didTapMenuButton()
     }
     
+    @objc func heartWasTapped(_ sender: UITapGestureRecognizer) {
+        let config = UIImage.SymbolConfiguration(pointSize: 50)
+        let image = UIImage(systemName: "heart.fill", withConfiguration: config)
+        heartImageView.image = image
+        print("Heart should change")
+    }
+    
     @objc func getJoke() {
         APIManager().fetchData { [weak self] result in
             guard let this = self else { return }
@@ -80,6 +109,7 @@ class HomeViewController: UIViewController {
                 print(error.localizedDescription)
             case .success(let joke):
                 DispatchQueue.main.async {
+                    this.setupHeartImage()
                     this.jokeLabel.text = joke.value.capitalizedSentence
                 }
             }
@@ -117,6 +147,7 @@ class HomeViewController: UIViewController {
                 }
                 }
             }
+        task.resume()
     }
 
 }
