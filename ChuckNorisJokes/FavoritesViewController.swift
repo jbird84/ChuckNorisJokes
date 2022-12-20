@@ -18,7 +18,7 @@ class FavoritesViewController: UIViewController {
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return table
     }()
-    var jokes: [NSManagedObject] = []
+    private var jokes = [Jokes]()
     let topics: [String] = [
         "Chuck Norris doesn't read books. He stares them down until he gets the information he wants.",
         "Time waits for no man. Unless that man is Chuck Norris.",
@@ -43,6 +43,7 @@ class FavoritesViewController: UIViewController {
         view.backgroundColor = .systemCyan
         setupTableView()
         getAllJokes()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateList), name: NSNotification.Name(rawValue: "update"), object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -59,8 +60,10 @@ class FavoritesViewController: UIViewController {
     //This will go get all jokes in core data and assign to the jokes array.
     func getAllJokes() {
         do {
-            let items = try context.fetch(Jokes.fetchRequest())
-            jokes = items
+            jokes = try context.fetch(Jokes.fetchRequest())
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         } catch {
             //TODO: show error
         }
@@ -74,6 +77,12 @@ class FavoritesViewController: UIViewController {
             //TODO: Handle Error Here
         }
     }
+    
+    @objc func updateList(notification: NSNotification) {
+        getAllJokes()
+        self.tableView.reloadData()
+    }
+    
 }
 
 //MARK: TableView
@@ -86,7 +95,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let joke = jokes[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = joke.value(forKey: "contents") as? String
+        cell.textLabel?.text = joke.contents
         cell.textLabel?.font = UIFont.systemFont(ofSize: 20)
         cell.backgroundColor = nil
         cell.textLabel?.numberOfLines = 0
@@ -102,9 +111,10 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             tableView.beginUpdates()
-            jokes.remove(at: indexPath.row)
             let joke = jokes[indexPath.row]
-            deleteJoke(joke: joke as! Jokes)
+            deleteJoke(joke: joke)
+            jokes.remove(at: indexPath.row)
+            getAllJokes()
             tableView.deleteRows(at: [indexPath], with: .fade)
             
             tableView.endUpdates()

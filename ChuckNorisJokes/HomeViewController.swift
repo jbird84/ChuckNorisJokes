@@ -103,7 +103,7 @@ class HomeViewController: UIViewController {
         print("Heart should change")
         guard let jokeString = jokeLabel.text else { return }
         addJokeToFavorite(joke: jokeString)
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "update"), object: nil)
     }
     
     @objc func getJoke() {
