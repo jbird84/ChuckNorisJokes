@@ -66,6 +66,14 @@ class FavoritesViewController: UIViewController {
         }
     }
     
+    func deleteJoke(joke: Jokes) {
+        context.delete(joke)
+        do {
+            try context.save()
+        } catch {
+            //TODO: Handle Error Here
+        }
+    }
 }
 
 //MARK: TableView
@@ -85,6 +93,22 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.textColor = .brown
         cell.contentView.backgroundColor = .cyan
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            jokes.remove(at: indexPath.row)
+            let joke = jokes[indexPath.row]
+            deleteJoke(joke: joke as! Jokes)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            tableView.endUpdates()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
