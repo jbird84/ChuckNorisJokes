@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import CoreData
 
 class FavoritesViewController: UIViewController {
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     private let tableView: UITableView = {
         let table = UITableView()
@@ -15,7 +18,7 @@ class FavoritesViewController: UIViewController {
         table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         return table
     }()
-    
+    var jokes: [NSManagedObject] = []
     let topics: [String] = [
         "Chuck Norris doesn't read books. He stares them down until he gets the information he wants.",
         "Time waits for no man. Unless that man is Chuck Norris.",
@@ -39,6 +42,7 @@ class FavoritesViewController: UIViewController {
         title = "Favorites"
         view.backgroundColor = .systemCyan
         setupTableView()
+        getAllJokes()
     }
     
     override func viewDidLayoutSubviews() {
@@ -51,18 +55,30 @@ class FavoritesViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+    //This will go get all jokes in core data and assign to the jokes array.
+    func getAllJokes() {
+        do {
+            let items = try context.fetch(Jokes.fetchRequest())
+            jokes = items
+        } catch {
+            //TODO: show error
+        }
+    }
+    
 }
 
 //MARK: TableView
 extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return topics.count
+        return jokes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let joke = jokes[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = topics[indexPath.row]
+        cell.textLabel?.text = joke.value(forKey: "contents") as? String
         cell.textLabel?.font = UIFont.systemFont(ofSize: 20)
         cell.backgroundColor = nil
         cell.textLabel?.numberOfLines = 0
@@ -74,9 +90,9 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        let item = MenuOptions.allCases[indexPath.row]
-//        delegate?.didSelect(menuItem: item)
-//    }
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        tableView.deselectRow(at: indexPath, animated: true)
+    //        let item = MenuOptions.allCases[indexPath.row]
+    //        delegate?.didSelect(menuItem: item)
+    //    }
 }

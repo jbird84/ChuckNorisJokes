@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import CoreData
 
 protocol HomeViewControllerDelegate: AnyObject {
     func didTapMenuButton()
 }
 
 class HomeViewController: UIViewController {
-
+    
     let heartImageView = UIImageView()
     let jokeLabel = UILabel()
     let getJokeButton = UIButton()
@@ -21,6 +22,8 @@ class HomeViewController: UIViewController {
     var isFavorite = false
     weak var delegate: HomeViewControllerDelegate?
     
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Home"
@@ -28,7 +31,6 @@ class HomeViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.dash"), style: .done, target: self, action: #selector(didTapMenuButton))
         setupJokeLabel()
         setupGetJokeButton()
-        //setupHeartImage()
     }
     
     private func setupJokeLabel() {
@@ -99,6 +101,9 @@ class HomeViewController: UIViewController {
         let image = UIImage(systemName: "heart.fill", withConfiguration: config)
         heartImageView.image = image
         print("Heart should change")
+        guard let jokeString = jokeLabel.text else { return }
+        addJokeToFavorite(joke: jokeString)
+        
     }
     
     @objc func getJoke() {
@@ -128,6 +133,19 @@ class HomeViewController: UIViewController {
                 }
             }
         }
+    
+    private func addJokeToFavorite(joke: String) {
+        //Create New Joke for coreData
+        let newFavoriteJoke = Jokes(context: context)
+        newFavoriteJoke.contents = joke
+        
+        //Save New Joke in CoreData
+        do {
+            try context.save()
+        } catch {
+            //TODO: Handle Error here
+        }
+    }
    
     private func downloadGif(url: String) {
         let imageUrlString = url

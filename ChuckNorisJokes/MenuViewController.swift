@@ -65,6 +65,7 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = MenuOptions.allCases[indexPath.row].rawValue
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 20)
         cell.imageView?.image = UIImage(named: MenuOptions.allCases[indexPath.row].imageName)
         cell.imageView?.clipsToBounds = true
         cell.imageView?.contentMode = .scaleAspectFill
@@ -77,5 +78,9 @@ extension MenuViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         let item = MenuOptions.allCases[indexPath.row]
         delegate?.didSelect(menuItem: item)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
 }
