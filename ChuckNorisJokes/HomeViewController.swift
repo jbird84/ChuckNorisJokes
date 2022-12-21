@@ -82,14 +82,16 @@ class HomeViewController: UIViewController {
     
     private func setupGifView() {
         view.addSubview(gifImageView)
-        gifImageView.frame = CGRect(x: 0, y: 0, width: view.bounds.width - 20, height: 300)
-        gifImageView.contentMode = .scaleAspectFill
+        gifImageView.frame = CGRect(x: 0, y: 0, width: view.bounds.width + 60, height: 250)
+        gifImageView.contentMode = .scaleToFill
         gifImageView.translatesAutoresizingMaskIntoConstraints = false
-        gifImageView.backgroundColor = .systemTeal
+        gifImageView.backgroundColor = .secondarySystemBackground
         
-        let centerXConstraint = gifImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        let bottomConstraint = gifImageView.bottomAnchor.constraint(equalTo: getJokeButton.topAnchor, constant: 0)
-        NSLayoutConstraint.activate([centerXConstraint, bottomConstraint])
+        let topConstraint = gifImageView.topAnchor.constraint(equalTo: jokeLabel.bottomAnchor,  constant: 50)
+        let bottomConstraint = gifImageView.bottomAnchor.constraint(equalTo: getJokeButton.topAnchor, constant: -50)
+        let leadingConstraint = gifImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+        let trailingConstraint = gifImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+        NSLayoutConstraint.activate([topConstraint, bottomConstraint, trailingConstraint, leadingConstraint])
     }
 
     @objc func didTapMenuButton() {
@@ -123,12 +125,14 @@ class HomeViewController: UIViewController {
             guard let this = self else { return }
             switch result {
             case .failure(let error):
-                print(error.localizedDescription)
+                print("ERRRR: \(error.localizedDescription)")
             case .success(let gif):
                     var gifURL = ""
-                    for url in gif.results {
-                        gifURL = "\(url.url)"
+                print(gif)
+                for url in gif.results {
+                    gifURL = "\(url.media_formats.gif.url)"
                     }
+                print(gifURL)
                 this.downloadGif(url: gifURL)
                 }
             }

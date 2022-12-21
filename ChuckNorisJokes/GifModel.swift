@@ -7,13 +7,22 @@
 
 import Foundation
 
-// MARK: - GIF
-struct GIF: Codable {
+// MARK: - Content
+struct Content: Decodable {
     let results: [Result]
 }
 
 // MARK: - Result
-struct Result: Codable {
-    let itemurl: String
+struct Result: Decodable {
+    let media_formats: MediaFormats
+}
+
+// MARK: - MediaFormats
+struct MediaFormats: Decodable {
+    let gif: GIF
+}
+
+// MARK: - GIF
+struct GIF: Decodable {
     let url: String
 }

@@ -25,10 +25,11 @@
 		DA5374612951315A009B1C61 /* Jokes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA53745F2951315A009B1C61 /* Jokes.xcdatamodeld */; };
 		DA53747029520E75009B1C61 /* Jokes+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53746E29520E75009B1C61 /* Jokes+CoreDataClass.swift */; };
 		DA53747129520E75009B1C61 /* Jokes+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA53746F29520E75009B1C61 /* Jokes+CoreDataProperties.swift */; };
+		DA53749A2952B488009B1C61 /* FLAnimatedImage in Frameworks */ = {isa = PBXBuildFile; productRef = DA5374992952B488009B1C61 /* FLAnimatedImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DA200C0B294E1E75009E1494 /* ChuckNorisJokes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChuckNorisJokes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA200C0B294E1E75009E1494 /* Chuck Norris.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chuck Norris.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA200C0E294E1E75009E1494 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA200C10294E1E75009E1494 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		DA200C12294E1E75009E1494 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA53749A2952B488009B1C61 /* FLAnimatedImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,7 +74,7 @@
 		DA200C0C294E1E75009E1494 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DA200C0B294E1E75009E1494 /* ChuckNorisJokes.app */,
+				DA200C0B294E1E75009E1494 /* Chuck Norris.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,9 +132,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DA200C0A294E1E75009E1494 /* ChuckNorisJokes */ = {
+		DA200C0A294E1E75009E1494 /* Chuck Norris */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DA200C1F294E1E77009E1494 /* Build configuration list for PBXNativeTarget "ChuckNorisJokes" */;
+			buildConfigurationList = DA200C1F294E1E77009E1494 /* Build configuration list for PBXNativeTarget "Chuck Norris" */;
 			buildPhases = (
 				DA200C07294E1E75009E1494 /* Sources */,
 				DA200C08294E1E75009E1494 /* Frameworks */,
@@ -142,9 +144,12 @@
 			);
 			dependencies = (
 			);
-			name = ChuckNorisJokes;
+			name = "Chuck Norris";
+			packageProductDependencies = (
+				DA5374992952B488009B1C61 /* FLAnimatedImage */,
+			);
 			productName = ChuckNorisJokes;
-			productReference = DA200C0B294E1E75009E1494 /* ChuckNorisJokes.app */;
+			productReference = DA200C0B294E1E75009E1494 /* Chuck Norris.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -171,11 +176,14 @@
 				Base,
 			);
 			mainGroup = DA200C02294E1E75009E1494;
+			packageReferences = (
+				DA5374982952B488009B1C61 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */,
+			);
 			productRefGroup = DA200C0C294E1E75009E1494 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DA200C0A294E1E75009E1494 /* ChuckNorisJokes */,
+				DA200C0A294E1E75009E1494 /* Chuck Norris */,
 			);
 		};
 /* End PBXProject section */
@@ -420,7 +428,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DA200C1F294E1E77009E1494 /* Build configuration list for PBXNativeTarget "ChuckNorisJokes" */ = {
+		DA200C1F294E1E77009E1494 /* Build configuration list for PBXNativeTarget "Chuck Norris" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DA200C20294E1E77009E1494 /* Debug */,
@@ -430,6 +438,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DA5374982952B488009B1C61 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Flipboard/FLAnimatedImage";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DA5374992952B488009B1C61 /* FLAnimatedImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DA5374982952B488009B1C61 /* XCRemoteSwiftPackageReference "FLAnimatedImage" */;
+			productName = FLAnimatedImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		DA53745F2951315A009B1C61 /* Jokes.xcdatamodeld */ = {

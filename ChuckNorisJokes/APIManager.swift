@@ -35,7 +35,7 @@ class APIManager {
         task.resume()
     }
     
-    func fetchGifData(completion: @escaping (Swift.Result<GIF, Error>) -> Void) {
+    func fetchGifData(completion: @escaping (Swift.Result<Content, Error>) -> Void) {
         guard let url = URL(string: "https://tenor.googleapis.com/v2/search?q=chuck_norris&key=AIzaSyBcv3DJnhdLS3b34pYWPJ-1l4gSUP8lk_w&client_key=Chuck_Norris_Jokes&limit=1&random=true") else { return }
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -50,7 +50,7 @@ class APIManager {
             }
                     do {
                         let decoder = JSONDecoder()
-                        let model = try decoder.decode(GIF.self, from: data)
+                        let model = try decoder.decode(Content.self, from: data)
                         completion(.success(model))
                     } catch {
                         completion(.failure(APIError.invalidData))
