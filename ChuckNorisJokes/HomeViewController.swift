@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
         let centerXConstraint = jokeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         let topConstraint = jokeLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200)
         let widthConstraint = jokeLabel.widthAnchor.constraint(equalToConstant: 300)
-
+        
         NSLayoutConstraint.activate([centerXConstraint, widthConstraint, topConstraint])
     }
     
@@ -93,7 +93,7 @@ class HomeViewController: UIViewController {
         let trailingConstraint = gifImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         NSLayoutConstraint.activate([topConstraint, bottomConstraint, trailingConstraint, leadingConstraint])
     }
-
+    
     @objc func didTapMenuButton() {
         delegate?.didTapMenuButton()
     }
@@ -119,24 +119,23 @@ class HomeViewController: UIViewController {
                     this.setupHeartImage()
                     this.jokeLabel.text = joke.value.capitalizedSentence
                 }
-            }
-        }
-        APIManager().fetchGifData { [weak self] result in
-            guard let this = self else { return }
-            switch result {
-            case .failure(let error):
-                print("ERRRR: \(error.localizedDescription)")
-            case .success(let gif):
-                    var gifURL = ""
-                print(gif)
-                for url in gif.results {
-                    gifURL = "\(url.media_formats.gif.url)"
+                
+                APIManager().fetchGifData { [weak self] result in
+                    guard let this = self else { return }
+                    switch result {
+                    case .failure(let error):
+                        print("ERRRR: \(error.localizedDescription)")
+                    case .success(let gif):
+                        var gifURL = ""
+                        for url in gif.results {
+                            gifURL = "\(url.media_formats.gif.url)"
+                        }
+                        this.downloadGif(url: gifURL)
                     }
-                print(gifURL)
-                this.downloadGif(url: gifURL)
                 }
             }
         }
+    }
     
     private func addJokeToFavorite(joke: String) {
         //Create New Joke for coreData
@@ -150,26 +149,25 @@ class HomeViewController: UIViewController {
             //TODO: Handle Error here
         }
     }
-   
+    
     private func downloadGif(url: String) {
         let imageUrlString = url
         guard let imageUrl = URL(string: imageUrlString) else { return }
         let task = URLSession.shared.dataTask(with: imageUrl) { [weak self] data, response, error in
-                guard let this = self else { return }
-                if let error = error {
-                    print("Woww an ERROR:")
-                    print(error)
-                    print("WOW  A local description")
-                    print(error.localizedDescription)
-                } else if let data = data {
+            guard let this = self else { return }
+            if let error = error {
+                print("Woww an ERROR:")
+                print(error)
+                print("WOW  A local description")
+                print(error.localizedDescription)
+            } else if let data = data {
                 let theGif = UIImage.gifImageWithData(data)
                 DispatchQueue.main.async {
                     this.gifImageView.image = theGif
                     this.setupGifView()
                 }
-                }
             }
+        }
         task.resume()
     }
-
 }
