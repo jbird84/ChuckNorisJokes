@@ -40,8 +40,8 @@ class LoginViewController: UIViewController {
                 print("DEBUG: error loging in anonymously because \(error.localizedDescription)")
                 return
             }
-            //If we were able to login successfully
-            print("DEBUG: Login was successful!!!")
+            //If the login was a success
+            print("DEBUG: Login was successful.")
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let containerViewController = storyBoard.instantiateViewController(withIdentifier: "container")
             
